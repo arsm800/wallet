@@ -5,6 +5,8 @@ import os
 import dotenv
 
 from constants import *
+from bit import PrivateKeyTestnet
+from eth_account import Account
 
 dotenv.load_dotenv()
 
@@ -30,6 +32,30 @@ def derive_wallets():
              BTCTEST: [keys[8], keys[9], keys[10], keys[11]]
             }
     
-    print(coins)
+    return(coins)
+    
+    # Test query
+    #print(coins[ETH][2]['pubkey'])
     
 derive_wallets()
+
+
+# Create function to convert private key string to an account object usable in bit or web3
+def privkey_to_account(coin, privkey):
+    if coin == ETH:
+        return Account.privateKeyToAccount(privkey)
+    elif coin == BTCTEST:
+        return PrivateKeyTestnet(privkey)
+
+
+
+# Create function to create raw, unsigned transaction
+def create_tx(coin, account, to, amount):
+    pass
+
+
+# Create function to sign transaction and send to designated network
+def send_tx(coin, account, to, amount):
+    pass
+    
+    
