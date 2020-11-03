@@ -1,5 +1,6 @@
 import subprocess
 import json
+from constants import *
 
 command = './derive -g --mnemonic="sunny carpet addict journey solid noodle grab exercise limb puppy process diary" --cols=path,address,privkey,pubkey --format=json'
 
