@@ -7,8 +7,11 @@ import dotenv
 from constants import *
 from bit import PrivateKeyTestnet
 from eth_account import Account
+from web3 import Web3
 
 dotenv.load_dotenv()
+
+w3=Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
 # Mnemonic variable for cryptowallet private key stored in .env file
 mnemonic = os.getenv("mnemonic", "mnemonic")
@@ -40,10 +43,14 @@ def derive_wallets():
 derive_wallets()
 
 
+# print(derive_wallets()[ETH])
+
 # Create function to convert private key string to an account object usable in bit or web3
 def privkey_to_account(coin, privkey):
+    
     if coin == ETH:
         return Account.privateKeyToAccount(privkey)
+    
     elif coin == BTCTEST:
         return PrivateKeyTestnet(privkey)
 
@@ -51,11 +58,25 @@ def privkey_to_account(coin, privkey):
 
 # Create function to create raw, unsigned transaction
 def create_tx(coin, account, to, amount):
-    pass
+    
+    if coin == ETH:
+        
+        gasEstimate = w3.eth.estimateGas({"from": account.address, 
+                                      "to": to, 
+                                      "value": amount})
+        
+        return {"from": account.address, 
+                "to": to, 
+                "value": amount, 
+                "gasPrice": w3.eth.gasPrice, 
+                "gas": gasEstimate, 
+                "nonce": w3.eth.getTransactionCount(account.address)}
+    
+    elif coin == BTCTEST:
+        PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])
 
 
 # Create function to sign transaction and send to designated network
 def send_tx(coin, account, to, amount):
     pass
-    
     
