@@ -35,12 +35,16 @@ def derive_wallets():
              BTCTEST: [keys[8], keys[9], keys[10], keys[11]]
             }
     
+    print(coins)
+    print(coins[ETH][2]['privkey'])
+    
     return(coins)
     
     # Test query
-    #print(coins[ETH][2]['pubkey'])
-    
-derive_wallets()
+    #print(coins[ETH][2]['privkey'])
+
+
+
 
 
 # print(derive_wallets()[ETH])
@@ -80,3 +84,11 @@ def create_tx(coin, account, to, amount):
 def send_tx(coin, account, to, amount):
     pass
     
+
+    
+    
+    
+    
+# Try out functions    
+derive_wallets()
+privkey_to_account(ETH, "KzuAJjV8NhvAraszwBtANcKhy5i7npNHhKZB9mSq9oMbPuAAGYoC")
